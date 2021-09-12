@@ -1,0 +1,22 @@
+plugins {
+    id("java")
+    id("org.spongepowered.gradle.vanilla") version "0.2"
+}
+
+archivesBaseName = mod_name
+version = "common-${minecraft_version}-${mod_version}"
+group = mod_group
+
+repositories {
+    mavenCentral()
+}
+
+minecraft {
+    version(minecraft_version) // or: latestRelease() or latestSnapshot()
+    runs {
+        server()
+        client()
+    }
+}
+dependencies {
+}
