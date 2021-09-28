@@ -1,22 +1,24 @@
 package com.example.examplemod;
 
-import net.minecraft.world.level.block.*;
+import java.util.stream.Collectors;
+
+import com.blamejared.stuff.Constants;
+
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.*;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fmlserverevents.FMLServerStartingEvent;
-import org.apache.logging.log4j.*;
 
-import java.util.stream.Collectors;
-
-@Mod("examplemod")
+@Mod(Constants.MOD_ID)
 public class ExampleMod {
-    
-    private static final Logger LOGGER = LogManager.getLogger();
     
     public ExampleMod() {
         
@@ -29,21 +31,21 @@ public class ExampleMod {
     
     private void setup(final FMLCommonSetupEvent event) {
         
-        LOGGER.info("HELLO FROM PREINIT");
-        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+        Constants.LOG.info("HELLO FROM PREINIT");
+        Constants.LOG.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
     }
     
     private void enqueueIMC(final InterModEnqueueEvent event) {
         
         InterModComms.sendTo("examplemod", "helloworld", () -> {
-            LOGGER.info("Hello world from the MDK");
+            Constants.LOG.info("Hello world from the MDK");
             return "Hello world";
         });
     }
     
     private void processIMC(final InterModProcessEvent event) {
         
-        LOGGER.info("Got IMC {}", event.getIMCStream()
+        Constants.LOG.info("Got IMC {}", event.getIMCStream()
                 .map(m -> m.messageSupplier().get())
                 .collect(Collectors.toList()));
     }
@@ -51,7 +53,7 @@ public class ExampleMod {
     @SubscribeEvent
     public void onServerStarting(FMLServerStartingEvent event) {
         
-        LOGGER.info("HELLO from server starting");
+        Constants.LOG.info("HELLO from server starting");
     }
     
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -60,7 +62,7 @@ public class ExampleMod {
         @SubscribeEvent
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
             // register a new block here
-            LOGGER.info("HELLO from Register Block");
+            Constants.LOG.info("HELLO from Register Block");
         }
         
     }
