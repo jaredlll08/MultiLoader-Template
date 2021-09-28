@@ -1,6 +1,6 @@
 plugins {
-    id("java")
-    id("org.spongepowered.gradle.vanilla") version "0.2"
+    id('java')
+    id('org.spongepowered.gradle.vanilla') version '0.2.1-SNAPSHOT'
 }
 
 archivesBaseName = mod_name
@@ -12,11 +12,9 @@ repositories {
 }
 
 minecraft {
-    version(minecraft_version) // or: latestRelease() or latestSnapshot()
+    version(minecraft_version)
     runs {
         server()
         client()
     }
-}
-dependencies {
 }
