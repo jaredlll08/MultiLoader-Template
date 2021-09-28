@@ -2,6 +2,8 @@ subprojects {
     
     apply plugin: 'java'
     
+    java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+    
     jar {
         manifest {
             attributes([
