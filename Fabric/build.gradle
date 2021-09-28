@@ -9,7 +9,6 @@ targetCompatibility = JavaVersion.VERSION_16
 
 archivesBaseName = mod_name
 version = "fabric-${minecraft_version}-${mod_version}"
-group = mod_group
 
 repositories {
 }

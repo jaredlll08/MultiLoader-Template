@@ -14,7 +14,6 @@ apply plugin: 'maven-publish'
 
 archivesBaseName = mod_name
 version = "forge-${minecraft_version}-${mod_version}"
-group = mod_group
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
