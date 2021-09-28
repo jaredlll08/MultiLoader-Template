@@ -4,7 +4,6 @@ plugins {
 }
 
 archivesBaseName = mod_name
-version = "common-${minecraft_version}-${mod_version}"
 
 repositories {
     mavenCentral()

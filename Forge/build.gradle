@@ -13,7 +13,6 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 archivesBaseName = mod_name
-version = "forge-${minecraft_version}-${mod_version}"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
