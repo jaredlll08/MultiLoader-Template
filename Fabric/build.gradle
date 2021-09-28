@@ -42,10 +42,6 @@ tasks.withType(JavaCompile).configureEach {
     it.options.release = 16
 }
 
-java {
-    withSourcesJar()
-}
-
 jar {
     dependsOn ":Common:compileJava"
     from project(":Common").sourceSets.main.output
