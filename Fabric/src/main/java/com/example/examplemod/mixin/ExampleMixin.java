@@ -1,4 +1,4 @@
-package net.fabricmc.example.mixin;
+package com.example.examplemod.mixin;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.TitleScreen;

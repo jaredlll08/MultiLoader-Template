@@ -31,6 +31,7 @@ public class ExampleMod {
         
         LOGGER.info("HELLO FROM PREINIT");
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+        CommonClass.init();
     }
     
     private void enqueueIMC(final InterModEnqueueEvent event) {
