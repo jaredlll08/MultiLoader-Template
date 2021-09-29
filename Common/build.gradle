@@ -1,22 +1,21 @@
 plugins {
-    id("java")
-    id("org.spongepowered.gradle.vanilla") version "0.2"
+    id('java')
+    id('org.spongepowered.gradle.vanilla') version '0.2.1-SNAPSHOT'
 }
 
-archivesBaseName = mod_name
-version = "common-${minecraft_version}-${mod_version}"
-group = mod_group
+archivesBaseName = "${mod_name}-common-${minecraft_version}"
 
 repositories {
     mavenCentral()
 }
 
 minecraft {
-    version(minecraft_version) // or: latestRelease() or latestSnapshot()
-    runs {
-        server()
-        client()
+    version(minecraft_version)
+    runs {   
+        if (project.hasProperty('common_runs_enabled') ? project.findProperty('common_runs_enabled').toBoolean() : true) {
+        
+            server(project.hasProperty('common_server_run_name') ? project.findProperty('common_server_run_name') : 'vanilla_server') {}              
+            client(project.hasProperty('common_client_run_name') ? project.findProperty('common_client_run_name') : 'vanilla_client') {}
+        }
     }
-}
-dependencies {
 }

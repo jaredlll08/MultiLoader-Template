@@ -12,11 +12,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-archivesBaseName = mod_name
-version = "forge-${minecraft_version}-${mod_version}"
-group = mod_group
-
-java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+archivesBaseName = "${mod_name}-forge-${minecraft_version}"
 
 minecraft {
     mappings channel: 'official', version: minecraft_version
@@ -93,7 +89,6 @@ jar {
         ])
     }
 }
-
 
 jar.finalizedBy('reobfJar')
 
