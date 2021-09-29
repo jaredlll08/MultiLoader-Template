@@ -51,9 +51,11 @@ java {
     withSourcesJar()
 }
 
+tasks.withType(JavaCompile) {
+    source(project(":Common").sourceSets.main.allSource)
+}
+
 jar {
-    dependsOn ":Common:compileJava"
-    from project(":Common").sourceSets.main.output
     from("LICENSE") {
         rename { "${it}_${mod_name}" }
     }
