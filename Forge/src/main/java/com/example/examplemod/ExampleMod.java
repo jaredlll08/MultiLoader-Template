@@ -2,8 +2,6 @@ package com.example.examplemod;
 
 import java.util.stream.Collectors;
 
-import com.blamejared.stuff.Constants;
-
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
