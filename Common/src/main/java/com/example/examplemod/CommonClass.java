@@ -7,8 +7,7 @@ public class CommonClass {
     
     public static void init() {
         
-        System.out.println("Hello from Common init!");
-        System.out.println("Diamond Item >> " + Registry.ITEM.getKey(Items.DIAMOND));
+        Constants.LOG.info("Hello from Common init!");
+        Constants.LOG.info("Diamond Item >> {}", Registry.ITEM.getKey(Items.DIAMOND));
     }
-    
 }
