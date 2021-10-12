@@ -19,3 +19,7 @@ minecraft {
         }
     }
 }
+
+dependencies {
+    implementation 'org.spongepowered:mixin:0.8.4'
+}
