@@ -40,6 +40,8 @@ processResources {
     }
 }
 
+sourceSets.main.resources.srcDir '../Common/src/main/resources'
+
 tasks.withType(JavaCompile) {
     source(project(":Common").sourceSets.main.allSource)
 }
