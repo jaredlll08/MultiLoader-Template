@@ -6,9 +6,6 @@ plugins {
 
 archivesBaseName = "${mod_name}-fabric-${minecraft_version}"
 
-repositories {
-}
-
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.officialMojangMappings()
