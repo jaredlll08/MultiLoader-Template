@@ -64,10 +64,8 @@ minecraft {
     }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
-
-repositories {
-}
+sourceSets.main.resources.srcDir 'src/generated/resources'
+sourceSets.main.resources.srcDir '../Common/src/main/resources'
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
