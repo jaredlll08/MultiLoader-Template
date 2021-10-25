@@ -65,7 +65,6 @@ minecraft {
 }
 
 sourceSets.main.resources.srcDir 'src/generated/resources'
-sourceSets.main.resources.srcDir '../Common/src/main/resources'
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
@@ -75,6 +74,11 @@ dependencies {
 tasks.withType(JavaCompile) {
     source(project(":Common").sourceSets.main.allSource)
 }
+
+processResources {
+    from project(":Common").sourceSets.main.resources
+}
+
 
 jar.finalizedBy('reobfJar')
 
