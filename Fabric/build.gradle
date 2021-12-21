@@ -54,15 +54,14 @@ jar {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact(remapJar) {
-                builtBy remapJar
-            }
-            artifact(sourcesJar) {
-                builtBy remapSourcesJar
-            }
+            groupId project.group
+            artifactId project.archivesBaseName
+            version project.version
+            from components.java
         }
     }
 
     repositories {
+        url "file://" + System.getenv("local_maven")
     }
 }
