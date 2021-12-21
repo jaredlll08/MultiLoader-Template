@@ -45,6 +45,8 @@ publishing {
     }
 
     repositories {
-        url "file://" + System.getenv("local_maven")
+        maven {
+            url "file://" + System.getenv("local_maven")
+        }
     }
 }
