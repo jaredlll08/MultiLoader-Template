@@ -18,9 +18,7 @@ apply plugin: 'maven-publish'
 archivesBaseName = "${mod_name}-forge-${minecraft_version}"
 
 mixin {
-    add project(":Common").sourceSets.main, "${mod_id}.refmap.json"
-
-    add sourceSets.main, "${mod_id}.forge.refmap.json"
+    add sourceSets.main, "${mod_id}.refmap.json"
 
     config "${mod_id}.mixins.json"
     config "${mod_id}.forge.mixins.json"
@@ -28,7 +26,7 @@ mixin {
 
 minecraft {
     mappings channel: 'official', version: minecraft_version
-    
+
     if (project.hasProperty('forge_ats_enabled') && project.findProperty('forge_ats_enabled').toBoolean()) {
         // This location is hardcoded in Forge and can not be changed.
         // https://github.com/MinecraftForge/MinecraftForge/blob/be1698bb1554f9c8fa2f58e32b9ab70bc4385e60/fmlloader/src/main/java/net/minecraftforge/fml/loading/moddiscovery/ModFile.java#L123
@@ -94,7 +92,7 @@ tasks.withType(JavaCompile) {
 processResources {
     from project(":Common").sourceSets.main.resources
 
-    filesMatching("${mod_id}.mixins.json") {
+    filesMatching('*.mixins.json') {
         expand "refmap_target": "${mod_id}."
     }
 }

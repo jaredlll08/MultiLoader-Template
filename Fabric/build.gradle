@@ -40,7 +40,7 @@ processResources {
         expand "version": project.version
     }
 
-    filesMatching("${mod_id}.mixins.json") {
+    filesMatching('*.mixins.json') {
         expand "refmap_target": "${archivesBaseName}-"
     }
 }
