@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "quilt_loader": {
+    "group": "quilt-example-mod",
+    "id": "modid",
+    "version": "${version}",
+    "intermediate_mappings": "net.fabricmc:intermediary",
+
+    "name": "Example Mod",
+    "description": "This is an example description! Tell everyone what your mod is about!",
+    "authors": [
+      "Me!"
+    ],
+    "contact": {
+      "homepage": "https://quiltmc.org/",
+      "sources": "https://github.com/Oliver-makes-code/quilt-example-mod"
+    },
+
+    "license": "CC0-1.0",
+    "icon": "assets/modid/icon.png",
+
+    "environment": "*",
+    "entrypoints": {
+      "init": [
+        "com.example.examplemod.ExampleMod"
+      ]
+    },
+    "depends": [
+      {
+        "id": "quilt_loader",
+        "version": "*"
+      },
+      {
+        "id": "quilt_base",
+        "version": "*"
+      },
+      {
+        "id": "minecraft",
+        "version": "1.18.2"
+      },
+      {
+        "id": "java",
+        "version": ">=17"
+      }
+    ]
+  },
+  "mixin": [
+    "modid.mixins.json"
+  ]
+}

@@ -28,6 +28,6 @@ public class ExampleMod {
     // the Common listener.
     private void onItemTooltip(ItemTooltipEvent event) {
         
-        CommonClass.onItemTooltip(event.getItemStack(), event.getFlags(), event.getToolTip());
+        CommonClass.onItemTooltip(event.getItemStack(), event.getPlayer(), event.getFlags(), event.getToolTip());
     }
 }
