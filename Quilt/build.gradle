@@ -1,5 +1,5 @@
 plugins {
-	id 'org.quiltmc.loom' version '0.12-SNAPSHOT'
+	id 'org.quiltmc.loom' version '0.12.+'
 	id 'maven-publish'
 }
 
@@ -7,12 +7,12 @@ repositories {
 
 	maven {
 		name 'Quilt (Release)'
-		url 'https://maven.quiltmc.org/repository/release'
+		url 'https://maven.quiltmc.org/repository/release/'
 	}
 
 	maven {
 		name 'Quilt (Snapshot)'
-		url 'https://maven.quiltmc.org/repository/snapshot'
+		url 'https://maven.quiltmc.org/repository/snapshot/'
 		content {
 			includeGroup 'org.quiltmc.fabric_api_qsl'
 			includeGroupByRegex 'org\\.quiltmc\\.qsl(?:\\.[a-z_]+)?'
@@ -26,7 +26,7 @@ dependencies {
 	mappings loom.officialMojangMappings()
 	modImplementation "org.quiltmc:quilt-loader:${quilt_loader_version}"
 
-	modImplementation("org.quiltmc.qsl:qsl:${quilt_stdlib_version}+${minecraft_version}-SNAPSHOT") {
+	modImplementation("org.quiltmc:qsl:${quilt_stdlib_version}") {
 		exclude group: "net.fabricmc"
 	}
 
