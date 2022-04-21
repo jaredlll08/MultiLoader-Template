@@ -3,6 +3,8 @@ plugins {
 	id 'maven-publish'
 }
 
+archivesBaseName = "${mod_name}-quilt-${minecraft_version}"
+
 repositories {
 
 	maven {
