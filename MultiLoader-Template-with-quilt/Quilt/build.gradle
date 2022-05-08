@@ -1,0 +1,75 @@
+plugins {
+	id 'org.quiltmc.loom' version '0.12.+'
+	id 'maven-publish'
+}
+
+archivesBaseName = "${mod_name}-quilt-${minecraft_version}"
+
+repositories {
+
+	maven {
+		name 'Quilt (Release)'
+		url 'https://maven.quiltmc.org/repository/release/'
+	}
+
+	maven {
+		name 'Quilt (Snapshot)'
+		url 'https://maven.quiltmc.org/repository/snapshot/'
+		content {
+			includeGroup 'org.quiltmc.fabric_api_qsl'
+			includeGroupByRegex 'org\\.quiltmc\\.qsl(?:\\.[a-z_]+)?'
+		}
+	}
+}
+
+dependencies {
+
+	minecraft "com.mojang:minecraft:${minecraft_version}"
+	mappings loom.officialMojangMappings()
+	modImplementation "org.quiltmc:quilt-loader:${quilt_loader_version}"
+
+	modImplementation("org.quiltmc:qsl:${quilt_stdlib_version}") {
+		exclude group: "net.fabricmc"
+	}
+
+	implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
+	implementation project(":Common")
+}
+
+processResources {
+
+    from project(":Common").sourceSets.main.resources
+	inputs.property "version", project.version
+
+	filesMatching("quilt.mod.json") {
+		expand "version": project.version
+	}
+}
+
+tasks.withType(JavaCompile) {
+
+    source(project(":Common").sourceSets.main.allSource)
+}
+
+jar {
+	from("LICENSE") {
+		rename { "${it}_${mod_name}"}
+	}
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId project.group
+            artifactId project.archivesBaseName
+            version project.version
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            url "file://" + System.getenv("local_maven")
+        }
+    }
+}
