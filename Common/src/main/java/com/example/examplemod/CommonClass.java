@@ -3,7 +3,6 @@ package com.example.examplemod;
 import com.example.examplemod.platform.Services;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -33,8 +32,8 @@ public class CommonClass {
 
             if (food != null) {
 
-                tooltip.add(new TextComponent("Nutrition: " + food.getNutrition()));
-                tooltip.add(new TextComponent("Saturation: " + food.getSaturationModifier()));
+                tooltip.add(Component.literal("Nutrition: " + food.getNutrition()));
+                tooltip.add(Component.literal("Saturation: " + food.getSaturationModifier()));
             }
         }
     }
