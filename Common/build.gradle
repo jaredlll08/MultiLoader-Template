@@ -35,6 +35,7 @@ processResources {
         expand buildProps
     }
 }
+
 publishing {
     publications {
         mavenJava(MavenPublication) {

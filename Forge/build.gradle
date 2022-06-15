@@ -77,14 +77,17 @@ dependencies {
     compileOnly project(":Common")
 }
 
-tasks.withType(JavaCompile) {
-    source(project(":Common").sourceSets.main.allSource)
+jar {
+    from project(":Common").sourceSets.main.output
 }
 
-processResources {
-    from project(":Common").sourceSets.main.resources
+javadoc {
+    source project(":Common").sourceSets.main.allJava
 }
 
+sourcesJar {
+    from project(":Common").sourceSets.main.allSource
+}
 
 jar.finalizedBy('reobfJar')
 
