@@ -16,12 +16,6 @@ dependencies {
 }
 
 loom {
-    mods {
-        register(mod_id) {
-            sourceSet sourceSets.main
-            sourceSet project(":Common").sourceSets.main
-        }
-    }
     runs {
         client {
             client()
@@ -38,7 +32,9 @@ loom {
     }
 }
 
+
 processResources {
+    from project(":Common").sourceSets.main.resources
     inputs.property "version", project.version
 
     filesMatching("fabric.mod.json") {
@@ -46,16 +42,8 @@ processResources {
     }
 }
 
-jar {
-    from project(":Common").sourceSets.main.output
-}
-
-javadoc {
-    source project(":Common").sourceSets.main.allJava
-}
-
-sourcesJar {
-    from project(":Common").sourceSets.main.allSource
+tasks.withType(JavaCompile) {
+    source(project(":Common").sourceSets.main.allSource)
 }
 
 publishing {
