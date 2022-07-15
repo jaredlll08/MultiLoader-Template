@@ -32,6 +32,27 @@ export default {
 
                     return matches.at(1) + cache.fabricVersion;
                 }
+            },
+            {
+                regex: /((kotlin_version|kotlinVersion)=)(.*)/,
+                replacement: (old, matches, cache) => {
+
+                    return matches.at(1) + cache.kotlinVersion;
+                }
+            },
+            {
+                regex: /((forge_kotlin_version|forgeKotlinVersion)=)(.*)/,
+                replacement: (old, matches, cache) => {
+
+                    return matches.at(1) + cache.forgeKotlinVersion;
+                }
+            },
+            {
+                regex: /((fabric_kotlin_version|fabricKotlinVersion)=)(.*)/,
+                replacement: (old, matches, cache) => {
+
+                    return matches.at(1) + cache.fabricKotlinVersion;
+                }
             }
         ],
         "Fabric\\src\\main\\resources\\fabric.mod.json": [{
