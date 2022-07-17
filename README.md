@@ -14,7 +14,7 @@ or download the code as a ZIP file, copy the template you want to use and rename
 
 To add a new template, simply create a folder for it, add the contents and then make a PR!
 
-If your new template has any version numbers that can be updated (like the Forge version for example), then please make sure that there is a replacement for it (if possible) in the `scropts/config.ts` file.
+If your new template has any version numbers that can be updated (like the Forge version for example), then please make sure that there is a replacement for it (if possible) in the `scripts/config.ts` file.
 
 # Scripts
 
