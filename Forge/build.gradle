@@ -1,20 +1,41 @@
 plugins {
     id 'java'
-    id 'eclipse'
+    id 'idea'
+    id 'net.minecraftforge.gradle'
+    id 'org.spongepowered.mixin'
+    id 'org.parchmentmc.librarian.forgegradle'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '5.1.+'
 }
 
 archivesBaseName = "${mod_name}-forge-${minecraft_version}"
 
+mixin {
+    add project(":Common").sourceSets.main, "${mod_id}.refmap.json"
+    add sourceSets.main, "${mod_id}.refmap.json"
+
+    config "${mod_id}.mixins.json"
+    config "${mod_id}-common.mixins.json"
+}
+
 minecraft {
-    mappings channel: 'official', version: minecraft_version
-    
-    if (project.hasProperty('forge_ats_enabled') && project.findProperty('forge_ats_enabled').toBoolean()) {
+
+    switch (mappings_type) {
+        case "official" :
+            mappings channel: 'official', version: minecraft_version
+            break
+        case "parchment" :
+            mappings channel: 'parchment', version: "${parchment_mc_version}-${parchment_mappings}-${minecraft_version}"
+            break
+        default :
+            mappings channel: 'official', version: minecraft_version
+            break
+    }
+
+    if (Boolean.parseBoolean(forge_ats_enabled)) {
         // This location is hardcoded in Forge and can not be changed.
         // https://github.com/MinecraftForge/MinecraftForge/blob/be1698bb1554f9c8fa2f58e32b9ab70bc4385e60/fmlloader/src/main/java/net/minecraftforge/fml/loading/moddiscovery/ModFile.java#L123
-        accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-        project.logger.debug('Forge Access Transformers are enabled for this project.')
+        accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')  // Currently, this location cannot be changed from the default.
+        println('Forge Access Transformers are enabled for this project.\n')
     }
 
     runs {
@@ -22,6 +43,9 @@ minecraft {
             workingDirectory project.file('run')
             ideaModule "${rootProject.name}.${project.name}.main"
             taskName 'Client'
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'forge.enabledGameTestNamespaces', mod_id
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
@@ -36,6 +60,9 @@ minecraft {
             workingDirectory project.file('run')
             ideaModule "${rootProject.name}.${project.name}.main"
             taskName 'Server'
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'forge.enabledGameTestNamespaces', mod_id
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
@@ -46,11 +73,30 @@ minecraft {
             }
         }
 
+        gameTestServer {
+            workingDirectory project.file('run')
+            ideaModule "${rootProject.name}.${project.name}.main"
+            taskName 'Test Server'
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'forge.enabledGameTestNamespaces', mod_id
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            mods {
+                modTestRun {
+                    source sourceSets.main
+                    source project(":Common").sourceSets.main
+                }
+            }
+        }
+
         data {
             workingDirectory project.file('run')
             ideaModule "${rootProject.name}.${project.name}.main"
+            taskName 'Datagen'
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
             args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-            taskName 'Data'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
@@ -63,23 +109,43 @@ minecraft {
     }
 }
 
-sourceSets.main.resources.srcDir 'src/generated/resources'
+//createMcpToSrg.finalizedBy('genIntellijRuns')
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    compileOnly project(":Common")
-}
 
-tasks.withType(JavaCompile) {
-    source(project(":Common").sourceSets.main.allSource)
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+    implementation project(":Common")
 }
 
 processResources {
     from project(":Common").sourceSets.main.resources
 }
 
+tasks.withType(JavaCompile).configureEach {
+    it.source(project(":Common").sourceSets.main.allSource)
+}
 
+sourcesJar {
+    if (Boolean.parseBoolean(common_add_to_sources)) {
+        from project(":Common").sourceSets.main.allSource
+    }
+}
+
+javadoc {
+    if (Boolean.parseBoolean(common_add_to_javadoc)) {
+        source(project(":Common").sourceSets.main.allJava)
+    }
+}
+
+// Example configuration to allow publishing using the maven-publish plugin
+// This is the preferred method to reobfuscate your jar file
 jar.finalizedBy('reobfJar')
+// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
+// publish.dependsOn('reobfJar')
 
 publishing {
     publications {

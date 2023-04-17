@@ -1,0 +1,141 @@
+plugins {
+	id 'java'
+	id 'org.quiltmc.loom' version '1.1.+'
+	id 'maven-publish'
+}
+
+archivesBaseName = "${mod_name}-quilt-${minecraft_version}"
+
+loom {
+	mixin {
+		defaultRefmapName = "${mod_id}.refmap.json"
+		// See https://github.com/FabricMC/fabric-loom/blob/dev/0.11/src/main/java/net/fabricmc/loom/api/MixinExtensionAPI.java for options to add additional sourcesets
+	}
+
+	if (Boolean.parseBoolean(quilt_aw_enabled)) {
+		// https://fabricmc.net/wiki/tutorial:accesswideners
+		accessWidenerPath = file("src/main/resources/${mod_id}.accesswidener")
+		println('Quilt Access Wideners are enabled for this project.\n')
+	}
+
+	runs {
+		client {
+			client()
+			setConfigName("Quilt Client")
+			ideConfigGenerated(true)
+			runDir("run")
+		}
+		server {
+			server()
+			setConfigName("Quilt Server")
+			ideConfigGenerated(true)
+			runDir("run")
+		}
+		// This adds a new gradle task that runs the datagen API: "gradlew runDatagen"
+		datagen {
+			inherit server
+			name "Data Generation"
+			setConfigName("Quilt Datagen")
+			ideConfigGenerated(true)
+			vmArg "-Dfabric-api.datagen"
+			vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
+			vmArg "-Dfabric-api.datagen.modid=${mod_id}"
+
+			runDir "build/datagen"
+		}
+	}
+}
+
+// Add the generated resources to the main source set
+sourceSets {
+    main {
+        resources {
+            srcDirs += [
+                    'src/main/generated'
+            ]
+        }
+    }
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${minecraft_version}"
+
+	switch (mappings_type) {
+		case "official" :
+			mappings loom.officialMojangMappings()
+			break
+		case "parchment" :
+			mappings loom.layered() {
+				officialMojangMappings()
+				parchment("org.parchmentmc.data:parchment-${parchment_mc_version}:${parchment_mappings}@zip")
+			}
+			break
+		case "yarn" :
+			mappings "net.fabricmc:yarn:${minecraft_version}+${yarn_mappings}:v2"
+			break
+		case "quilt" :
+			mappings "org.quiltmc:quilt-mappings:$minecraft_version+$quilt_mappings_version:intermediary-v2"
+			break
+		case "quilted_official" :
+			mappings loom.layered {
+				mappings "org.quiltmc:quilt-mappings:$minecraft_version+$quilt_mappings_version:intermediary-v2"
+				officialMojangMappings()
+			}
+			break
+		default :
+			mappings loom.officialMojangMappings()
+			break
+	}
+
+	modImplementation "org.quiltmc:quilt-loader:${quilt_loader_version}"
+	modImplementation "org.quiltmc.quilted-fabric-api:quilted-fabric-api:${quilted_fabric_api_version}-${minecraft_version}"
+
+	implementation project(":Common")
+
+	if (Boolean.parseBoolean(quilt_deprecated_api)) {
+		modImplementation "org.quiltmc.quilted-fabric-api:quilted-fabric-api-deprecated:$quilted_fabric_api_version-$minecraft_version"
+		// If you wish to use Fabric API's deprecated modules, you can replace the above line with this one
+	}
+}
+
+processResources {
+	from project(":Common").sourceSets.main.resources
+	inputs.property "version", mod_version
+
+	filesMatching("quilt.mod.json") {
+		expand "version": mod_version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.source(project(":Common").sourceSets.main.allSource)
+}
+
+sourcesJar {
+	if (Boolean.parseBoolean(common_add_to_sources)) {
+		from project(":Common").sourceSets.main.allSource
+	}
+}
+
+javadoc {
+	if (Boolean.parseBoolean(common_add_to_javadoc)) {
+		source(project(":Common").sourceSets.main.allJava)
+	}
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			groupId project.group
+			artifactId project.archivesBaseName
+			version project.version
+			from components.java
+		}
+	}
+
+	repositories {
+		maven {
+			url "file://" + System.getenv("local_maven")
+		}
+	}
+}

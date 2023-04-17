@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.spongepowered.gradle.vanilla' version '0.2.1-SNAPSHOT'
+    id 'org.spongepowered.gradle.vanilla'
     id 'maven-publish'
 }
 
@@ -8,13 +8,13 @@ archivesBaseName = "${mod_name}-common-${minecraft_version}"
 
 minecraft {
     version(minecraft_version)
+
     runs {   
-        if (project.hasProperty('common_runs_enabled') ? project.findProperty('common_runs_enabled').toBoolean() : true) {
-        
-            server(project.hasProperty('common_server_run_name') ? project.findProperty('common_server_run_name') : 'vanilla_server') {
+        if (Boolean.parseBoolean(common_runs_enabled as String)) {
+            server(common_server_run_name as String) {
                 workingDirectory(this.file("run"))
             }
-            client(project.hasProperty('common_client_run_name') ? project.findProperty('common_client_run_name') : 'vanilla_client') {
+            client(common_client_run_name as String) {
                 workingDirectory(this.file("run"))
             }
         }
@@ -22,16 +22,16 @@ minecraft {
 }
 
 dependencies {
-     compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
-     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
+    compileOnly 'org.spongepowered:mixin:0.8.5'
 }
 
-processResources {
+// Add the generated resources to the main source set
+sourceSets.main.resources { srcDir 'src/generated/resources' }
 
-    def buildProps = project.properties.clone()
+processResources {
+    def buildProps = new HashMap<>(project.properties)
 
     filesMatching(['pack.mcmeta']) {
-
         expand buildProps
     }
 }

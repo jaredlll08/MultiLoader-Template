@@ -1,39 +1,39 @@
 {
-    "schemaVersion": 1,
-    "id": "modid",
-    "version": "${version}",
-  
-    "name": "Example Mod",
-    "description": "This is an example description! Tell everyone what your mod is about!",
-    "authors": [
-      "Me!"
-    ],
-    "contact": {
-      "homepage": "https://fabricmc.net/",
-      "sources": "https://github.com/FabricMC/fabric-example-mod"
-    },
-  
-    "license": "CC0-1.0",
-    "icon": "assets/modid/icon.png",
-  
-    "environment": "*",
-    "entrypoints": {
-      "main": [
-        "com.example.examplemod.ExampleMod"
-      ]
-    },
-    "mixins": [
-      "modid.mixins.json"
-    ],
-  
-    "depends": {
-      "fabricloader": ">=0.14",
-      "fabric": "*",
-      "minecraft": "1.19.3",
-      "java": ">=17"
-    },
-    "suggests": {
-      "another-mod": "*"
-    }
-  }
-  
+	"schemaVersion": 1,
+	"id": "examplemod",
+	"version": "${version}",
+	"name": "Example Mod",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/examplemod/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.example.examplemod.ExampleMod"
+		],
+		"fabric-datagen": [
+			"com.example.examplemod.ExampleModDataGenerator"
+		]
+	},
+	"mixins": [
+		"examplemod-common.mixins.json",
+		"examplemod.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.14.19",
+		"minecraft": "~1.19.3",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	},
+	"accessWidener" : "examplemod.accesswidener"
+}

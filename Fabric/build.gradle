@@ -1,21 +1,25 @@
 plugins {
-    id 'fabric-loom' version '1.0-SNAPSHOT'
-    id 'maven-publish'
+    id 'java'
     id 'idea'
+	id 'fabric-loom' version '1.1.+'
+	id 'maven-publish'
 }
 
 archivesBaseName = "${mod_name}-fabric-${minecraft_version}"
 
-dependencies {
-    minecraft "com.mojang:minecraft:${minecraft_version}"
-    mappings loom.officialMojangMappings()
-    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
-    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
-    implementation project(":Common")
-}
 
 loom {
+    mixin {
+        defaultRefmapName = "${mod_id}.refmap.json"
+        // See https://github.com/FabricMC/fabric-loom/blob/dev/0.11/src/main/java/net/fabricmc/loom/api/MixinExtensionAPI.java for options to add additional sourcesets
+    }
+
+    if (Boolean.parseBoolean(fabric_aw_enabled)) {
+        // https://fabricmc.net/wiki/tutorial:accesswideners
+        accessWidenerPath = file("src/main/resources/${mod_id}.accesswidener")
+        println('Fabric Access Wideners are enabled for this project.\n')
+    }
+
     runs {
         client {
             client()
@@ -29,21 +33,98 @@ loom {
             ideConfigGenerated(true)
             runDir("run")
         }
+        // This adds a new gradle task that runs the datagen API: "gradlew runDatagen"
+        datagen {
+            inherit server
+            name "Data Generation"
+            setConfigName("Fabric Datagen")
+            ideConfigGenerated(true)
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
+            vmArg "-Dfabric-api.datagen.modid=${mod_id}"
+ 
+            runDir "build/datagen"
+        }
     }
 }
 
+// Add the generated resources to the main source set
+sourceSets {
+    main {
+        resources {
+            srcDirs += [
+                    'src/main/generated'
+            ]
+        }
+    }
+}
+
+dependencies {
+	// To change the versions see the gradle.properties file
+	minecraft "com.mojang:minecraft:${minecraft_version}"
+
+    switch (mappings_type) {
+        case "official" :
+            mappings loom.officialMojangMappings()
+            break
+        case "parchment" :
+            mappings loom.layered() {
+                officialMojangMappings()
+                parchment("org.parchmentmc.data:parchment-${parchment_mc_version}:${parchment_mappings}@zip")
+            }
+            break
+        case "yarn" :
+            mappings "net.fabricmc:yarn:${minecraft_version}+${yarn_mappings}:v2"
+            break
+        case "quilt" :
+            mappings "org.quiltmc:quilt-mappings:$minecraft_version+$quilt_mappings_version:intermediary-v2"
+            break
+        case "quilted_official" :
+            mappings loom.layered {
+                mappings "org.quiltmc:quilt-mappings:$minecraft_version+$quilt_mappings_version:intermediary-v2"
+                officialMojangMappings()
+            }
+            break
+        default :
+            mappings loom.officialMojangMappings()
+            break
+    }
+
+	modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}+${minecraft_version}"
+
+	// Uncomment the following line to enable the deprecated Fabric API modules. 
+	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
+    if (Boolean.parseBoolean(fabric_deprecated_api)) {
+        modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${fabric_version}+${minecraft_version}"
+    }
+
+    implementation project(":Common")
+}
 
 processResources {
     from project(":Common").sourceSets.main.resources
-    inputs.property "version", project.version
+	inputs.property "version", mod_version
 
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
+	filesMatching("fabric.mod.json") {
+		expand "version": mod_version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.source(project(":Common").sourceSets.main.allSource)
+}
+
+sourcesJar {
+    if (Boolean.parseBoolean(common_add_to_sources)) {
+        from project(":Common").sourceSets.main.allSource
     }
 }
 
-tasks.withType(JavaCompile) {
-    source(project(":Common").sourceSets.main.allSource)
+javadoc {
+    if (Boolean.parseBoolean(common_add_to_javadoc)) {
+        source(project(":Common").sourceSets.main.allJava)
+    }
 }
 
 publishing {

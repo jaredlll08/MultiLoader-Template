@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "com.example.examplemod.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"refmap": "examplemod.refmap.json",
+	"mixins": [],
+	"client": [
+		"CommonMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

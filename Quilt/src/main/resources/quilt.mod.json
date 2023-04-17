@@ -1,0 +1,44 @@
+{
+	"schema_version": 1,
+	"quilt_loader": {
+		"group": "com.example",
+		"id": "examplemod",
+		"version": "${version}",
+		"metadata": {
+			"name": "Example Mod",
+			"description": "A short description of your mod.",
+			"contributors": {
+				"Your name here": "Owner"
+			},
+			"contact": {
+				"homepage": "https://example.com/",
+				"issues": "https://github.com/QuiltMC/quilt-template-mod/issues",
+				"sources": "https://github.com/QuiltMC/quilt-template-mod"
+			},
+			"icon": "assets/examplemod/icon.png"
+		},
+		"intermediate_mappings": "net.fabricmc:intermediary",
+		"entrypoints": {
+			"init": "com.example.examplemod.ExampleMod"
+		},
+		"depends": [
+			{
+				"id": "quilt_loader",
+				"versions": ">=0.18.10-"
+			},
+			{
+				"id": "quilted_fabric_api",
+				"versions": ">=5.0.0-"
+			},
+			{
+				"id": "minecraft",
+				"versions": ">=1.19.3"
+			}
+		]
+	},
+	"mixin": [
+		"examplemod-common.mixins.json",
+		"examplemod.mixins.json"
+	],
+	"accessWidener" : "examplemod.accesswidener"
+}

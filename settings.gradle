@@ -1,20 +1,41 @@
 pluginManagement {
     repositories {
         gradlePluginPortal()
+        mavenCentral()
+        mavenLocal()
         maven {
             name = 'Forge'
-            url = 'https://maven.minecraftforge.net/'
-        }
+            url = 'https://maven.minecraftforge.net/' }
         maven {
             name = 'Fabric'
             url = 'https://maven.fabricmc.net/'
         }
         maven {
-            name = 'Sponge Snapshots'
+            name = 'Quilt'
+            url = 'https://maven.quiltmc.org/repository/release'
+        }
+        maven {
+            name = 'Sponge'
             url = 'https://repo.spongepowered.org/repository/maven-public/'
+        }
+        maven {
+            name = 'Parchment'
+            url = 'https://maven.parchmentmc.org'
+        }
+    }
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.toString() == 'org.spongepowered.mixin') {
+                useModule("org.spongepowered:mixingradle:${requested.version}")
+            }
         }
     }
 }
 
 rootProject.name = 'MultiLoader'
-include("Common", "Fabric", "Forge")
+
+include ":Common"
+include ":Forge"
+include ":Fabric"
+include ":Quilt"
+

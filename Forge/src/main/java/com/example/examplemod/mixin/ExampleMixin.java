@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ExampleMixin {
 	@Inject(at = @At("HEAD"), method = "loadLevel")
 	private void init(CallbackInfo info) {
-		// This code is injected into the start of MinecraftServer.loadWorld()V
-		Constants.LOGGER.info("This line is printed by a fabric mixin!");
+		Constants.LOGGER.info("This line is printed by a forge mixin!");
 	}
 }
