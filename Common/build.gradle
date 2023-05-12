@@ -22,7 +22,7 @@ minecraft {
 }
 
 dependencies {
-    compileOnly 'org.spongepowered:mixin:0.8.5'
+    compileOnly "org.spongepowered:mixin:${mixin_version}"
 }
 
 // Add the generated resources to the main source set
