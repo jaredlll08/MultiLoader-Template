@@ -23,8 +23,8 @@
 		]
 	},
 	"mixins": [
-		"examplemod-common.mixins.json",
-		"examplemod.mixins.json"
+		"examplemod.mixins.json",
+		"examplemod.fabric.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.14.19",

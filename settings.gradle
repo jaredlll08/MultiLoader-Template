@@ -2,7 +2,6 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         mavenCentral()
-        mavenLocal()
         maven {
             name = 'Forge'
             url = 'https://maven.minecraftforge.net/' }
@@ -22,12 +21,9 @@ pluginManagement {
             name = 'Parchment'
             url = 'https://maven.parchmentmc.org'
         }
-    }
-    resolutionStrategy {
-        eachPlugin {
-            if (requested.id.toString() == 'org.spongepowered.mixin') {
-                useModule("org.spongepowered:mixingradle:${requested.version}")
-            }
+        maven {
+            name = 'BlameJared Maven (CrT / Bookshelf)'
+            url = 'https://maven.blamejared.com'
         }
     }
 }
@@ -37,5 +33,7 @@ rootProject.name = 'MultiLoader'
 include ":Common"
 include ":Forge"
 include ":Fabric"
-include ":Quilt"
+if (Boolean.parseBoolean(quilt_enabled as String)) {
+    include ":Quilt"
+}
 

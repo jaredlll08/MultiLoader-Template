@@ -1,6 +1,6 @@
 # MultiLoader Template
 
-This project provides a Gradle project template that can compile mods for both Forge and Fabric using a common sourceset. This project does not require any third party libraries or dependencies. If you have any questions or want to discuss the project join our [Discord](https://discord.myceliummod.network).
+This project provides a Gradle project template that can compile mods for both Forge, Fabric and Quilt1 using a common sourceset. This project does not require any third party libraries or dependencies. If you have any questions or want to discuss the project join our [Discord](https://discord.myceliummod.network).
 
 ## Getting Started
 
@@ -8,7 +8,7 @@ This project provides a Gradle project template that can compile mods for both F
 This guide will show how to import the MultiLoader Template into IntelliJ IDEA. The setup process is roughly equivalent to setting up Forge and Fabric independently and should be very familiar to anyone who has worked with their MDKs.
 
 1. Clone or download this repository to your computer.
-2. Configure the project by editing the `mod_id`, `mod_name`, `mod_author`, and `mod_domain` properties in the `gradle.properties` file. You will also need to change the `rootProject.name`  property in `settings.gradle`.
+2. Configure the project by editing the `mod_id`, `mod_name`, and `mod_group` properties in the `gradle.properties` file. You will also need to change the `rootProject.name`  property in `settings.gradle`.
 3. Open the template's root folder as a new project in IDEA. This is the folder that contains this README file and the gradlew executable.
 4. If your default JVM/JDK is not Java 17 you will encounter an error when opening the project. This error is fixed by going to `File > Settings > Build, Execution, Deployment > Build Tools > Gradle > Gradle JVM`and changing the value to a valid Java 17 JVM. You will also need to set the Project SDK to Java 17. This can be done by going to `File > Project Structure > Project SDK`. Once both have been set open the Gradle tab in IDEA and click the refresh button to reload the project.
 5. Open the Gradle tab in IDEA if it has not already been opened. Navigate to `Your Project > Common > Tasks > vanilla gradle > decompile`. Run this task to decompile Minecraft.
@@ -23,3 +23,6 @@ While it is possible to use this template in Eclipse it is not recommended. Duri
 When using this template the majority of your mod is developed in the Common project. The Common project is compiled against the vanilla game and is used to hold code that is shared between the different loader-specific versions of your mod. The Common project has no knowledge or access to ModLoader specific code, apis, or concepts. Code that requires something from a specific loader must be done through the project that is specific to that loader, such as the Forge or Fabric project.
 
 Loader specific projects such as the Forge and Fabric project are used to load the Common project into the game. These projects also define code that is specific to that loader. Loader specific projects can access all of the code in the Common project. It is important to remember that the Common project can not access code from loader specific projects.
+
+## Notes
+Optionally, only if Quilt-specific code is required, or a mod cannot rely just on Fabric APIs. 

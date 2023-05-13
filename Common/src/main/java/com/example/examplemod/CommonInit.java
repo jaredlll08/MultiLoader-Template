@@ -23,9 +23,9 @@ public class CommonInit {
         // your own abstraction layer. You can learn more about this in our provided services class. In this example
         // we have an interface in the common code and use a loader specific implementation to delegate our call to
         // the platform specific approach.
-        if (Services.PLATFORM.isModLoaded(Constants.MOD_ID)) {
+        if (Services.PLATFORM.isModLoaded("examplemod")) {
 
-            Constants.LOGGER.info("Hello to " + Constants.MOD_ID);
+            Constants.LOGGER.info("Hello to examplemod");
         }
     }
 }

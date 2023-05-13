@@ -37,8 +37,8 @@
 		]
 	},
 	"mixin": [
-		"examplemod-common.mixins.json",
-		"examplemod.mixins.json"
+		"examplemod.mixins.json",
+		"examplemod.quilt.mixins.json"
 	],
 	"accessWidener" : "examplemod.accesswidener"
 }

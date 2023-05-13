@@ -4,20 +4,18 @@ plugins {
     id 'net.minecraftforge.gradle' version '5.1.+' apply false
     id 'org.spongepowered.mixin' version '0.7.+' apply false
     id 'org.parchmentmc.librarian.forgegradle' version '1.+' apply false
-    //id 'fabric-loom' version '1.1.+' apply false
-    //id 'org.quiltmc.loom' version '1.1+' apply false
+    //id 'fabric-loom' version '1.1.+' apply false // cannot be added here due to incompatibility with org.quiltmc.loom, added is Fabric subproject
+    //id 'org.quiltmc.loom' version '1.1+' apply false // cannot be added here due to incompatibility with fabric-loom, added is Quilt subproject
 }
 
 subprojects {
     apply plugin: 'java'
 
-    group "${mod_domain}.${mod_author}.${mod_id}"
+    group "${mod_group}.${mod_id}"
     version mod_version
 
     java {
         toolchain.languageVersion.set(JavaLanguageVersion.of(java_version as int))
-        //setSourceCompatibility(JavaVersion.toVersion(java_version as int))
-        //setTargetCompatibility(JavaVersion.toVersion(java_version as int))
         withSourcesJar()
         withJavadocJar()
     }
@@ -36,7 +34,7 @@ subprojects {
             attributes([
                     'Specification-Title'     : mod_id,
                     'Specification-Vendor'    : mod_author,
-                    'Specification-Version'   : "1", // We are version 1 of ourselves
+                    'Specification-Version'   : "1", // We are version 1 of ourselves (the Manifest attributes specification)
                     'Implementation-Title'    : mod_name,
                     'Implementation-Version'  : project.jar.archiveVersion,
                     'Implementation-Vendor'   : mod_author,
@@ -82,6 +80,10 @@ subprojects {
         maven {
             name = 'Parchment'
             url = 'https://maven.parchmentmc.org'
+        }
+        maven {
+            name = 'BlameJared Maven (CrT / Bookshelf)'
+            url = 'https://maven.blamejared.com'
         }
     }
 }

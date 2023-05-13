@@ -7,6 +7,49 @@ plugins {
 
 archivesBaseName = "${mod_name}-fabric-${minecraft_version}"
 
+dependencies {
+    // To change the versions see the gradle.properties file
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+
+    mappings loom.officialMojangMappings()
+    /*switch (mappings_type) { // Draft, not working yet
+        case "official" :
+            mappings loom.officialMojangMappings()
+            break
+        case "parchment" :
+            mappings loom.layered() {
+                officialMojangMappings()
+                parchment("org.parchmentmc.data:parchment-${parchment_mc_version}:${parchment_mappings}@zip")
+            }
+            break
+        case "yarn" :
+            mappings "net.fabricmc:yarn:${minecraft_version}+${yarn_mappings}:v2"
+            break
+        case "quilt" :
+            mappings "org.quiltmc:quilt-mappings:$minecraft_version+$quilt_mappings_version:intermediary-v2"
+            break
+        case "quilted_official" :
+            mappings loom.layered {
+                mappings "org.quiltmc:quilt-mappings:$minecraft_version+$quilt_mappings_version:intermediary-v2"
+                officialMojangMappings()
+            }
+            break
+        default :
+            mappings loom.officialMojangMappings()
+            break
+    }*/
+
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}+${minecraft_version}"
+
+    if (Boolean.parseBoolean(fabric_deprecated_api)) {
+        modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${fabric_version}+${minecraft_version}"
+    }
+
+    implementation "com.google.code.findbugs:jsr305:3.0.2"
+
+    implementation project(":Common")
+}
 
 loom {
     mixin {
@@ -49,58 +92,7 @@ loom {
 }
 
 // Add the generated resources to the main source set
-sourceSets {
-    main {
-        resources {
-            srcDirs += [
-                    'src/main/generated'
-            ]
-        }
-    }
-}
-
-dependencies {
-	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${minecraft_version}"
-
-    switch (mappings_type) {
-        case "official" :
-            mappings loom.officialMojangMappings()
-            break
-        case "parchment" :
-            mappings loom.layered() {
-                officialMojangMappings()
-                parchment("org.parchmentmc.data:parchment-${parchment_mc_version}:${parchment_mappings}@zip")
-            }
-            break
-        case "yarn" :
-            mappings "net.fabricmc:yarn:${minecraft_version}+${yarn_mappings}:v2"
-            break
-        case "quilt" :
-            mappings "org.quiltmc:quilt-mappings:$minecraft_version+$quilt_mappings_version:intermediary-v2"
-            break
-        case "quilted_official" :
-            mappings loom.layered {
-                mappings "org.quiltmc:quilt-mappings:$minecraft_version+$quilt_mappings_version:intermediary-v2"
-                officialMojangMappings()
-            }
-            break
-        default :
-            mappings loom.officialMojangMappings()
-            break
-    }
-
-	modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}+${minecraft_version}"
-
-	// Uncomment the following line to enable the deprecated Fabric API modules. 
-	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
-    if (Boolean.parseBoolean(fabric_deprecated_api)) {
-        modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${fabric_version}+${minecraft_version}"
-    }
-
-    implementation project(":Common")
-}
+sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 processResources {
     from project(":Common").sourceSets.main.resources

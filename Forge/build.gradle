@@ -14,12 +14,12 @@ mixin {
     add sourceSets.main, "${mod_id}.refmap.json"
 
     config "${mod_id}.mixins.json"
-    config "${mod_id}-common.mixins.json"
+    config "${mod_id}.forge.mixins.json"
 }
 
 minecraft {
-
-    switch (mappings_type) {
+    mappings channel: 'official', version: minecraft_version
+    /*switch (mappings_type) { // Draft, not working yet
         case "official" :
             mappings channel: 'official', version: minecraft_version
             break
@@ -29,7 +29,7 @@ minecraft {
         default :
             mappings channel: 'official', version: minecraft_version
             break
-    }
+    }*/
 
     if (Boolean.parseBoolean(forge_ats_enabled)) {
         // This location is hardcoded in Forge and can not be changed.
@@ -43,8 +43,10 @@ minecraft {
             workingDirectory project.file('run')
             ideaModule "${rootProject.name}.${project.name}.main"
             taskName 'Client'
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
+            if (Boolean.parseBoolean(forge_extra_logging as String)) {
+                property 'forge.logging.markers', 'REGISTRIES'
+                property 'forge.logging.console.level', 'debug'
+            }
             property 'forge.enabledGameTestNamespaces', mod_id
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
@@ -60,8 +62,10 @@ minecraft {
             workingDirectory project.file('run')
             ideaModule "${rootProject.name}.${project.name}.main"
             taskName 'Server'
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
+            if (Boolean.parseBoolean(forge_extra_logging as String)) {
+                property 'forge.logging.markers', 'REGISTRIES'
+                property 'forge.logging.console.level', 'debug'
+            }
             property 'forge.enabledGameTestNamespaces', mod_id
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
@@ -77,8 +81,10 @@ minecraft {
             workingDirectory project.file('run')
             ideaModule "${rootProject.name}.${project.name}.main"
             taskName 'Test Server'
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
+            if (Boolean.parseBoolean(forge_extra_logging as String)) {
+                property 'forge.logging.markers', 'REGISTRIES'
+                property 'forge.logging.console.level', 'debug'
+            }
             property 'forge.enabledGameTestNamespaces', mod_id
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
@@ -94,8 +100,10 @@ minecraft {
             workingDirectory project.file('run')
             ideaModule "${rootProject.name}.${project.name}.main"
             taskName 'Datagen'
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
+            if (Boolean.parseBoolean(forge_extra_logging as String)) {
+                property 'forge.logging.markers', 'REGISTRIES'
+                property 'forge.logging.console.level', 'debug'
+            }
             args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
@@ -117,16 +125,17 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
+    implementation "com.google.code.findbugs:jsr305:3.0.2"
 
     implementation project(":Common")
 }
 
-processResources {
-    from project(":Common").sourceSets.main.resources
-}
-
 tasks.withType(JavaCompile).configureEach {
     it.source(project(":Common").sourceSets.main.allSource)
+}
+
+processResources {
+    from project(":Common").sourceSets.main.resources
 }
 
 sourcesJar {
