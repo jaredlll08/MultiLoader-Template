@@ -4,7 +4,7 @@ plugins {
     id 'net.minecraftforge.gradle' version '5.1.+' apply false
     id 'org.spongepowered.mixin' version '0.7.+' apply false
     id 'org.parchmentmc.librarian.forgegradle' version '1.+' apply false
-    //id 'fabric-loom' version '1.1.+' apply false // cannot be added here due to incompatibility with org.quiltmc.loom, added is Fabric subproject
+    //id 'fabric-loom' version '1.2.+' apply false // cannot be added here due to incompatibility with org.quiltmc.loom, added is Fabric subproject
     //id 'org.quiltmc.loom' version '1.1+' apply false // cannot be added here due to incompatibility with fabric-loom, added is Quilt subproject
 }
 
