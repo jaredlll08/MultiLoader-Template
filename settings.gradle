@@ -17,4 +17,6 @@ pluginManagement {
 }
 
 rootProject.name = 'MultiLoader'
-include("common", "fabric", "forge")
+include("common")
+include("fabric")
+include("forge")
