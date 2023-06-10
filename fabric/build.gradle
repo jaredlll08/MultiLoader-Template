@@ -1,7 +1,8 @@
 plugins {
-    id 'fabric-loom' version '1.2-SNAPSHOT'
-    id 'maven-publish'
+    id 'java'
     id 'idea'
+    id 'maven-publish'
+    id 'fabric-loom' version '1.2-SNAPSHOT'
 }
 
 archivesBaseName = "${mod_name}-fabric-${minecraft_version}"
