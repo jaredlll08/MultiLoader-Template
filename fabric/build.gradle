@@ -17,7 +17,7 @@ dependencies {
 }
 
 loom {
-    if(project(":common").file("src/main/resources/${mod_id}.accesswidener").exists()){
+    if (project(":common").file("src/main/resources/${mod_id}.accesswidener").exists()) {
         accessWidenerPath.set(project(":common").file("src/main/resources/${mod_id}.accesswidener"))
     }
     mixin {
@@ -39,12 +39,18 @@ loom {
     }
 }
 
-processResources {
-    from project(":common").sourceSets.main.resources
-}
-
 tasks.withType(JavaCompile).configureEach {
     source(project(":common").sourceSets.main.allSource)
+}
+tasks.withType(Javadoc).configureEach {
+    source(project(":common").sourceSets.main.allJava)
+}
+tasks.named("sourcesJar", Jar) {
+    from(project(":common").sourceSets.main.allSource)
+}
+
+processResources {
+    from project(":common").sourceSets.main.resources
 }
 
 publishing {
