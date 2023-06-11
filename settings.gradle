@@ -20,7 +20,8 @@ plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
 }
 
-rootProject.name = 'MultiLoader'
+// This should match the folder name of the project, or else IDEA may complain (see https://youtrack.jetbrains.com/issue/IDEA-317606)
+rootProject.name = 'MultiLoader-Template'
 include("common")
 include("fabric")
 include("forge")
