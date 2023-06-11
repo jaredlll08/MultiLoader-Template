@@ -1,5 +1,5 @@
 modLoader = "javafml" #mandatory
-loaderVersion = "[44,)" #mandatory This is typically bumped every Minecraft version by Forge. See https://files.minecraftforge.net/ for a list of versions.
+loaderVersion = "[46,)" #mandatory This is typically bumped every Minecraft version by Forge. See https://files.minecraftforge.net/ for a list of versions.
 license = "C0-1.0" # Review your options at https://choosealicense.com/.
 #issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
 [[mods]] #mandatory
@@ -17,12 +17,12 @@ This is a long form description of the mod. You can write whatever you want here
 [[dependencies.multiloader]] #optional
 modId = "forge" #mandatory
 mandatory = true #mandatory
-versionRange = "[44,)" #mandatory
+versionRange = "[46,)" #mandatory
 ordering = "NONE" # The order that this dependency should load in relation to your mod, required to be either 'BEFORE' or 'AFTER' if the dependency is not mandatory
 side = "BOTH" # Side this dependency is applied on - 'BOTH', 'CLIENT' or 'SERVER'
 [[dependencies.multiloader]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.19.3,1.20)"
+versionRange = "[1.20,1.21)"
 ordering = "NONE"
 side = "BOTH"
