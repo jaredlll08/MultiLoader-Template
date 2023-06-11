@@ -43,7 +43,7 @@ processResources {
     from project(":common").sourceSets.main.resources
 }
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     source(project(":common").sourceSets.main.allSource)
 }
 
