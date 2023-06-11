@@ -1,6 +1,6 @@
 modLoader = "javafml" #mandatory
 loaderVersion = "[44,)" #mandatory This is typically bumped every Minecraft version by Forge. See https://files.minecraftforge.net/ for a list of versions.
-license = "All rights reserved" # Review your options at https://choosealicense.com/.
+license = "C0-1.0" # Review your options at https://choosealicense.com/.
 #issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
 [[mods]] #mandatory
 modId = "multiloader" #mandatory
