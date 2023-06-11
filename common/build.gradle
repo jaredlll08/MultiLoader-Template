@@ -9,6 +9,9 @@ archivesBaseName = "${mod_name}-common-${minecraft_version}"
 
 minecraft {
     version(minecraft_version)
+    if(file("src/main/resources/${mod_id}.accesswidener").exists()){
+        accessWideners(file("src/main/resources/${mod_id}.accesswidener"))
+    }
 }
 
 dependencies {
