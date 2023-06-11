@@ -2,6 +2,7 @@ plugins {
     id 'fabric-loom' version '1.2-SNAPSHOT' apply(false)
     id 'net.minecraftforge.gradle' version '[6.0,6.2)' apply(false)
     id 'org.spongepowered.gradle.vanilla' version '0.2.1-SNAPSHOT' apply(false)
+    id("org.spongepowered.mixin") version "0.7-SNAPSHOT" apply(false)
 }
 
 subprojects {
@@ -59,7 +60,7 @@ subprojects {
     }
 
     processResources {
-        filesMatching(['pack.mcmeta', 'fabric.mod.json', 'mods.toml']) {
+        filesMatching(['pack.mcmeta', 'fabric.mod.json', 'mods.toml', '*.mixins.json']) {
             expand project.properties
         }
     }
