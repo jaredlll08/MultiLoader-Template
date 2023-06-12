@@ -97,7 +97,9 @@ jar.finalizedBy('reobfJar')
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            artifactId base.archivesName.get()
             from components.java
+            fg.component(it)
         }
     }
     repositories {
