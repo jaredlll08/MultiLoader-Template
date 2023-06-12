@@ -4,9 +4,9 @@ plugins {
     id 'maven-publish'
     id 'fabric-loom'
 }
-
-archivesBaseName = "${mod_name}-fabric-${minecraft_version}"
-
+base {
+    archivesName = "${mod_name}-fabric-${minecraft_version}"
+}
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.officialMojangMappings()

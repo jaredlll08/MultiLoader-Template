@@ -4,9 +4,9 @@ plugins {
     id 'maven-publish'
     id 'org.spongepowered.gradle.vanilla'
 }
-
-archivesBaseName = "${mod_name}-common-${minecraft_version}"
-
+base {
+    archivesName = "${mod_name}-common-${minecraft_version}"
+}
 minecraft {
     version(minecraft_version)
     if(file("src/main/resources/${mod_id}.accesswidener").exists()){

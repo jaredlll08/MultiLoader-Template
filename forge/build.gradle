@@ -4,9 +4,9 @@ plugins {
     id 'net.minecraftforge.gradle'
     id 'org.spongepowered.mixin'
 }
-
-archivesBaseName = "${mod_name}-forge-${minecraft_version}"
-
+base {
+    archivesName = "${mod_name}-forge-${minecraft_version}"
+}
 mixin {
     add(sourceSets.main, "${mod_id}.refmap.json")
 
