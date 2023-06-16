@@ -5,7 +5,7 @@ license = "C0-1.0" # Review your options at https://choosealicense.com/.
 [[mods]] #mandatory
 modId = "multiloader" #mandatory
 version = "${file.jarVersion}" #mandatory
-displayName = "Example Mod" #mandatory
+displayName = "${mod_name}" #mandatory
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional (see https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/)
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional (displayed in the mod UI)
 logoFile = "multiloader.png" #optional (needs to be in the root of your mod jar (root of your 'resources' folder))
