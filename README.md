@@ -4,7 +4,7 @@ This project provides a Gradle project template that can compile mods for both F
 
 ## Getting Started
 
-## IntelliJ IDEA
+### IntelliJ IDEA
 This guide will show how to import the MultiLoader Template into IntelliJ IDEA. The setup process is roughly equivalent to setting up Forge and Fabric independently and should be very familiar to anyone who has worked with their MDKs.
 
 1. Clone or download this repository to your computer.
@@ -23,3 +23,9 @@ While it is possible to use this template in Eclipse it is not recommended. Duri
 When using this template the majority of your mod is developed in the Common project. The Common project is compiled against the vanilla game and is used to hold code that is shared between the different loader-specific versions of your mod. The Common project has no knowledge or access to ModLoader specific code, apis, or concepts. Code that requires something from a specific loader must be done through the project that is specific to that loader, such as the Forge or Fabric project.
 
 Loader specific projects such as the Forge and Fabric project are used to load the Common project into the game. These projects also define code that is specific to that loader. Loader specific projects can access all of the code in the Common project. It is important to remember that the Common project can not access code from loader specific projects.
+
+## Removing Platforms and Loaders
+While the MultiLoader Template includes support for many platforms and loaders you can easily remove support for the ones you don't need. This can be done by deleting the subproject folder and then removing it from the `settings.gradle` file. For example if you wanted to remove support for Forge you would follow the following steps. 
+
+1. Delete the subproject folder. For example, delete `MultiLoader-Template/forge`.
+2. Remove the project from `settings.gradle`. For example, remove `include("forge")`. 
