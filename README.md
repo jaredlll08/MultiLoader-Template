@@ -4,7 +4,7 @@ This project provides a Gradle project template that can compile mods for both F
 
 ## Getting Started
 
-## IntelliJ IDEA
+### IntelliJ IDEA
 This guide will show how to import the MultiLoader Template into IntelliJ IDEA. The setup process is roughly equivalent to setting up Forge and Fabric independently and should be very familiar to anyone who has worked with their MDKs.
 
 1. Clone or download this repository to your computer.
