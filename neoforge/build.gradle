@@ -1,7 +1,10 @@
+import org.apache.tools.ant.filters.LineContains
+
 plugins {
     id 'idea'
     id 'maven-publish'
     id 'net.neoforged.gradle.userdev' version '7.0.41'
+    id 'net.neoforged.gradle.mixin' version '7.0.41'
     id 'java-library'
 }
 base {
@@ -13,6 +16,10 @@ base {
 // https://github.com/neoforged/FancyModLoader/blob/a952595eaaddd571fbc53f43847680b00894e0c1/loader/src/main/java/net/neoforged/fml/loading/moddiscovery/ModFile.java#L118
 if (file('src/main/resources/META-INF/accesstransformer.cfg').exists()) {
     minecraft.accessTransformers.file file('src/main/resources/META-INF/accesstransformer.cfg')
+}
+mixin {
+    config "${project.mod_id}.mixins.json"
+    config "${project.mod_id}.neoforge.mixins.json"
 }
 runs {
     configureEach {
@@ -61,6 +68,11 @@ tasks.named("sourcesJar", Jar) {
 
 tasks.withType(ProcessResources).excludingNeoTasks().configureEach {
     from project(":common").sourceSets.main.resources
+
+    // We don't need a refmap specification on NeoForge, so this line removes it from the Common mixins json.
+    filesMatching("${mod_id}.mixins.json") {
+        filter(LineContains, negate: true, contains: ['refmap' ] )
+    }
 }
 
 publishing {
