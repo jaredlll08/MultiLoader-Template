@@ -43,15 +43,13 @@ dependencies {
 }
 
 // NeoGradle compiles the game, but we don't want to add our common code to the game's code
-TaskCollection.metaClass.excludingNeoTasks = { ->
-    delegate.matching { !it.name.startsWith("neo") }
-}
+Spec<Task> notNeoTask = { Task it -> !it.name.startsWith("neo") } as Spec<Task>
 
-tasks.withType(JavaCompile).excludingNeoTasks().configureEach {
+tasks.withType(JavaCompile).matching(notNeoTask).configureEach {
     source(project(":common").sourceSets.main.allSource)
 }
 
-tasks.withType(Javadoc).excludingNeoTasks().configureEach {
+tasks.withType(Javadoc).matching(notNeoTask).configureEach {
     source(project(":common").sourceSets.main.allJava)
 }
 
@@ -59,7 +57,7 @@ tasks.named("sourcesJar", Jar) {
     from(project(":common").sourceSets.main.allSource)
 }
 
-tasks.withType(ProcessResources).excludingNeoTasks().configureEach {
+tasks.withType(ProcessResources).matching(notNeoTask).configureEach {
     from project(":common").sourceSets.main.resources
 }
 
