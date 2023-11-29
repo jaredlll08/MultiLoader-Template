@@ -13,16 +13,16 @@ credits="${credits}" #optional
 authors = "${mod_author}" #optional
 description = '''${description}''' #mandatory (Supports multiline text)
 [[mixins]]
-config = "examplemod.mixins.json"
+config = "${mod_id}.mixins.json"
 [[mixins]]
-config = "examplemod.neoforge.mixins.json"
-[[dependencies.${ mod_id }]] #optional
+config = "${mod_id}.neoforge.mixins.json"
+[[dependencies.${mod_id}]] #optional
 modId = "neoforge" #mandatory
 mandatory = true #mandatory
 versionRange = "${neoforge_loader_version_range}" #mandatory
 ordering = "NONE" # The order that this dependency should load in relation to your mod, required to be either 'BEFORE' or 'AFTER' if the dependency is not mandatory
 side = "BOTH" # Side this dependency is applied on - 'BOTH', 'CLIENT' or 'SERVER'
-[[dependencies.${ mod_id }]]
+[[dependencies.${mod_id}]]
 modId = "minecraft"
 mandatory = true
 versionRange = "${minecraft_version_range}"
