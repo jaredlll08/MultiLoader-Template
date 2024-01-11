@@ -12,7 +12,7 @@
         "sources": "https://github.com/FabricMC/fabric-example-mod"
     },
     "license": "${license}",
-    "icon": "assets/${mod_id}/${mod_id}.png",
+    "icon": "${mod_id}.png",
     "environment": "*",
     "entrypoints": {
         "main": [
@@ -24,9 +24,9 @@
         "${mod_id}.fabric.mixins.json"
     ],
     "depends": {
-        "fabricloader": ">=0.14",
+        "fabricloader": ">=${fabric_loader_version}",
         "fabric-api": "*",
-        "minecraft": "1.20.2",
+        "minecraft": "${minecraft_version}",
         "java": ">=17"
     },
     "suggests": {
