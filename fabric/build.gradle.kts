@@ -21,7 +21,7 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:$fabric_loader_version")
     modImplementation("net.fabricmc.fabric-api:fabric-api:$fabric_version")
     implementation("com.google.code.findbugs:jsr305:3.0.1")
-    implementation(project(":common"))
+    comlileOnly(project(":common"))
 }
 
 loom {
