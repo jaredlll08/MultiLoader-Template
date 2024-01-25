@@ -8,7 +8,7 @@ plugins {
 val mod_id: String by project
 val mod_name: String by project
 val minecraft_version: String by project
-val forgeVersion: String by project
+val forge_version: String by project
 
 base {
     archivesName.set("${mod_name}-forge-${minecraft_version}")
@@ -64,7 +64,7 @@ minecraft {
         create("data") {
             workingDirectory(project.file("run"))
             ideaModule("${rootProject.name}.${project.name}.main")
-            programArguments(
+            args(
                 "--mod", modId,
                 "--all",
                 "--output", file("src/generated/resources").absolutePath,
@@ -86,7 +86,7 @@ minecraft {
 sourceSets.main.get().resources.srcDir("src/generated/resources")
 
 dependencies {
-    minecraft("net.minecraftforge:forge:${minecraftVersion}-${forgeVersion}")
+    minecraft("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
     compileOnly(project(":common"))
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
 }
