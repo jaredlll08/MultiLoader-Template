@@ -65,7 +65,7 @@ minecraft {
             workingDirectory(project.file("run"))
             ideaModule("${rootProject.name}.${project.name}.main")
             args(
-                "--mod", modId,
+                "--mod", mod_id,
                 "--all",
                 "--output", file("src/generated/resources").absolutePath,
                 "--existing", file("src/main/resources/").absolutePath
