@@ -1,0 +1,27 @@
+modLoader = "javafml" #mandatory
+loaderVersion = "${forge_loader_version_range}" #mandatory This is typically bumped every Minecraft version by Forge. See https://files.minecraftforge.net/ for a list of versions.
+license = "${license}" # Review your options at https://choosealicense.com/.
+#issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
+#clientSideOnly=true #optional
+[[mods]] #mandatory
+modId = "${mod_id}" #mandatory
+version = "${version}" #mandatory
+displayName = "${mod_name}" #mandatory
+#updateJSONURL="https://change.me.example.invalid/updates.json" #optional (see https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/)
+#displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional (displayed in the mod UI)
+logoFile = "${mod_id}.png" #optional
+credits = "${credits}" #optional
+authors = "${mod_author}" #optional
+description = '''${description}''' #mandatory (Supports multiline text)
+[[dependencies.${mod_id}]] #optional
+modId = "forge" #mandatory
+mandatory = true #mandatory
+versionRange = "${forge_version_range}" #mandatory
+ordering = "NONE" # The order that this dependency should load in relation to your mod, required to be either 'BEFORE' or 'AFTER' if the dependency is not mandatory
+side = "BOTH" # Side this dependency is applied on - 'BOTH', 'CLIENT' or 'SERVER'
+[[dependencies.${mod_id}]]
+modId = "minecraft"
+mandatory = true
+versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"

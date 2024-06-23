@@ -69,10 +69,13 @@ jar {
 }
 
 processResources {
-    def expandProps = [
+    var expandProps = [
             "version": version,
             "group": project.group, //Else we target the task's group.
             "minecraft_version": minecraft_version,
+            "forge_version": forge_version,
+            "forge_loader_version_range": forge_loader_version_range,
+            "forge_version_range": forge_version_range,
             "minecraft_version_range": minecraft_version_range,
             "fabric_version": fabric_version,
             "fabric_loader_version": fabric_loader_version,
@@ -87,7 +90,11 @@ processResources {
             "java_version": java_version
     ]
 
-    filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', 'META-INF/neoforge.mods.toml', '*.mixins.json']) {
+    filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', '*.mixins.json']) {
+        expand expandProps
+    }
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expandProps["description"] = project.description.replace("\n", "\\n")
         expand expandProps
     }
     inputs.properties(expandProps)
