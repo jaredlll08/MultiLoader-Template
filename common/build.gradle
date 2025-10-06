@@ -3,6 +3,11 @@ plugins {
     id 'net.neoforged.moddev.legacyforge'
 }
 
+mixin {
+    add(sourceSets.main, "${mod_id}.mixins.refmap.json")
+    config("${mod_id}.mixins.json")
+}
+
 legacyForge {
     mcpVersion = minecraft_version
     if (file("src/main/resources/META-INF/accesstransformer.cfg").exists()) {
