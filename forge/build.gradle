@@ -1,15 +1,14 @@
 plugins {
     id 'multiloader-loader'
-    id 'net.minecraftforge.gradle' version '[6.0.24,6.2)'
-    id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
+    id 'net.minecraftforge.gradle' version '7.0.0-beta.46'
 }
 base {
     archivesName = "${mod_name}-forge-${minecraft_version}"
 }
-mixin {
-    config("${mod_id}.mixins.json")
-    config("${mod_id}.forge.mixins.json")
-}
+//mixin {
+//    config("${mod_id}.mixins.json")
+//    config("${mod_id}.forge.mixins.json")
+//}
 jar {
     manifest {
         attributes["MixinConfigs"] = "${mod_id}.mixins.json,${mod_id}.forge.mixins.json"
@@ -18,10 +17,6 @@ jar {
 
 minecraft {
     mappings channel: 'official', version: minecraft_version
-
-    copyIdeResources = true //Calls processResources when in dev
-
-    reobf = false // Forge 1.20.6+ uses official mappings at runtime, so we shouldn't reobf from official to SRG
 
     // Automatically enable forge AccessTransformers if the file exists
     // This location is hardcoded in Forge and can not be changed.
@@ -33,62 +28,44 @@ minecraft {
     }
 
     runs {
+        configureEach {
+            args "-mixin.config=${mod_id}.mixins.json"
+            args "-mixin.config=${mod_id}.forge.mixins.json"
+        }
+
         client {
-            workingDirectory file('runs/client')
-            ideaModule "${rootProject.name}.${project.name}.main"
-            taskName 'Client'
-            mods {
-                modClientRun {
-                    source sourceSets.main
-                }
-            }
+            workingDir = file('runs/client')
         }
 
         server {
-            workingDirectory file('runs/server')
-            ideaModule "${rootProject.name}.${project.name}.main"
-            taskName 'Server'
-            mods {
-                modServerRun {
-                    source sourceSets.main
-                }
-            }
+            workingDir = file('runs/server')
         }
 
         data {
-            workingDirectory file('runs/data')
-            ideaModule "${rootProject.name}.${project.name}.main"
+            workingDir = file('runs/data')
             args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-            taskName 'Data'
-            mods {
-                modDataRun {
-                    source sourceSets.main
-                }
-            }
         }
     }
 }
 
 sourceSets.main.resources.srcDir 'src/generated/resources'
 
-dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
+repositories {
+    maven minecraft.mavenizer
+    maven fg.forgeMaven
+    maven fg.minecraftLibsMaven
+}
 
-    // Forge's hack fix
-    implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
+dependencies {
+    implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
+
+    // This is currently bugged due to the absence of obfuscation mappings
+    //annotationProcessor "org.spongepowered:mixin:0.8.5-SNAPSHOT:processor"
 }
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            fg.component(it)
         }
     }
-}
-
-sourceSets.each {
-    def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
-    it.output.resourcesDir = dir
-    it.java.destinationDirectory = dir
 }

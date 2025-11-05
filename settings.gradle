@@ -26,22 +26,23 @@ pluginManagement {
                 includeGroupAndSubgroups("org.spongepowered")
             }
         }
-        exclusiveContent {
-            forRepository {
+//        exclusiveContent {
+//            forRepository {
                 maven {
                     name = 'Forge'
                     url = uri('https://maven.minecraftforge.net')
                 }
-            }
-            filter {
-                includeGroupAndSubgroups('net.minecraftforge')
-            }
-        }
+//            }
+//            filter {
+//                includeGroupAndSubgroups('net.minecraftforge')
+//            }
+//        }
+        mavenLocal()
     }
 }
 
 plugins {
-    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
 }
 
 // This should match the folder name of the project, or else IDEA may complain (see https://youtrack.jetbrains.com/issue/IDEA-317606)
