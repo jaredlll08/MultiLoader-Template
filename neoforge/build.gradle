@@ -32,6 +32,10 @@ neoForge {
         }
         server {
             server()
+            var runDir=file('server')
+            if(!runDir.exists())
+                mkdir('server')
+            setGameDirectory(file('server'))
         }
     }
     mods {
