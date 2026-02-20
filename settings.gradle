@@ -10,9 +10,7 @@ pluginManagement {
                 }
             }
             filter {
-                includeGroup('net.fabricmc')
-                includeGroup('net.fabricmc.unpick')
-                includeGroup('fabric-loom')
+                includeGroupAndSubgroups('net.fabricmc')
             }
         }
         exclusiveContent {
@@ -37,6 +35,18 @@ pluginManagement {
                 includeGroupAndSubgroups('net.minecraftforge')
             }
         }
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = 'NeoForge'
+                    url = uri('https://maven.neoforged.net/')
+                }
+            }
+            filter {
+                includeGroupAndSubgroups('net.neoforged')
+            }
+        }
+
     }
 }
 
