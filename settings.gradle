@@ -35,18 +35,10 @@ pluginManagement {
                 includeGroupAndSubgroups('net.minecraftforge')
             }
         }
-        exclusiveContent {
-            forRepository {
-                maven {
-                    name = 'NeoForge'
-                    url = uri('https://maven.neoforged.net/')
-                }
-            }
-            filter {
-                includeGroupAndSubgroups('net.neoforged')
-            }
+        maven {
+            name = 'NeoForge'
+            url = uri('https://maven.neoforged.net/')
         }
-
     }
 }
 
