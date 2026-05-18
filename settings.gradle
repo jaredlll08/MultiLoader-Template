@@ -20,8 +20,18 @@ plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
 }
 
-// This should match the folder name of the project, or else IDEA may complain (see https://youtrack.jetbrains.com/issue/IDEA-317606)
-rootProject.name = 'MultiLoader-Template'
-include('common')
-include('fabric')
-include('neoforge')
+String modId = providers.gradleProperty("mod_id").get()
+
+rootProject.name = modId
+
+rootDir.listFiles().findAll {
+    it.isDirectory()
+        && it.name != "buildSrc"
+        && (new File(it, "build.gradle").exists() || new File(it, "build.gradle.kts").exists())
+}.forEach {
+    String relativePath = rootDir.toPath().relativize(it.toPath()).toString()
+    String projectName = ":$modId-$relativePath"
+
+    include(projectName)
+    project(projectName).projectDir = it
+}
