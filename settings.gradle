@@ -24,9 +24,11 @@ String modId = providers.gradleProperty("mod_id").get()
 
 rootProject.name = modId
 
+includeBuild("build-logic")
+
 rootDir.listFiles().findAll {
     it.isDirectory()
-        && it.name != "buildSrc"
+        && it.name != "build-logic"
         && (new File(it, "build.gradle").exists() || new File(it, "build.gradle.kts").exists())
 }.forEach {
     String relativePath = rootDir.toPath().relativize(it.toPath()).toString()
