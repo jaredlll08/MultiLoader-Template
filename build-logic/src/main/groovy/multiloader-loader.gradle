@@ -18,8 +18,8 @@ dependencies {
             attribute(loaderAttribute, 'common')
         }
     }
-    commonJava project(path: ':common', configuration: 'commonJava')
-    commonResources project(path: ':common', configuration: 'commonResources')
+    commonJava(project(path: ':common', configuration: 'commonJava'))
+    commonResources(project(path: ':common', configuration: 'commonResources'))
 }
 
 tasks.named('compileJava', JavaCompile) {
