@@ -2,26 +2,24 @@ plugins {
     id 'multiloader-common'
 }
 
-String commonPath = ":$mod_id-common"
-
 configurations {
-    commonJava {
+    commonJava{
         canBeResolved = true
     }
-    commonResources {
+    commonResources{
         canBeResolved = true
     }
 }
 
 dependencies {
-    compileOnly(project(commonPath)) {
+    compileOnly(project(':common')) {
         def loaderAttribute = Attribute.of('io.github.mcgradleconventions.loader', String)
         attributes {
             attribute(loaderAttribute, 'common')
         }
     }
-    commonJava project(path: commonPath, configuration: 'commonJava')
-    commonResources project(path: commonPath, configuration: 'commonResources')
+    commonJava project(path: ':common', configuration: 'commonJava')
+    commonResources project(path: ':common', configuration: 'commonResources')
 }
 
 tasks.named('compileJava', JavaCompile) {

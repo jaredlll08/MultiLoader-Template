@@ -3,6 +3,10 @@ plugins {
     id 'maven-publish'
 }
 
+base {
+    archivesName = "${mod_id}-${project.name}-${minecraft_version}"
+}
+
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(java_version)
     withSourcesJar()
@@ -88,6 +92,7 @@ processResources {
 publishing {
     publications {
         register('mavenJava', MavenPublication) {
+            artifactId base.archivesName.get()
             from components.java
         }
     }
