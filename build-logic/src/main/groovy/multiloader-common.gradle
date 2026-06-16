@@ -31,16 +31,13 @@ repositories {
     }
 }
 
-sourcesJar {
+tasks.withType(Jar).configureEach {
     from(rootProject.file('LICENSE')) {
         rename { "${it}_${mod_name}" }
     }
 }
 
 jar {
-    from(rootProject.file('LICENSE')) {
-        rename { "${it}_${mod_name}" }
-    }
 
     manifest {
         attributes([
