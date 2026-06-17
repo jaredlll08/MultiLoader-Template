@@ -7,5 +7,6 @@ public class Constants {
 
     public static final String MOD_ID = "examplemod";
     public static final String MOD_NAME = "ExampleMod";
+    public static final String MOD_DISPLAY_NAME = "Example Mod";
     public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
 }

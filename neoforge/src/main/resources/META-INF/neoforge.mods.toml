@@ -5,7 +5,7 @@ license = "${license}" # Review your options at https://choosealicense.com/.
 [[mods]] #mandatory
 modId = "${mod_id}" #mandatory
 version = "${version}" #mandatory
-displayName = "${mod_name}" #mandatory
+displayName = "${mod_display_name}" #mandatory
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional (see https://docs.neoforged.net/docs/misc/updatechecker/)
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional (displayed in the mod UI)
 logoFile="${mod_id}.png" #optional
