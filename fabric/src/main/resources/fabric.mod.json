@@ -2,7 +2,7 @@
     "schemaVersion": 1,
     "id": "${mod_id}",
     "version": "${version}",
-    "name": "${mod_name}",
+    "name": "${mod_display_name}",
     "description": "${description}",
     "authors": [
         "${mod_author}"

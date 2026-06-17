@@ -1,6 +1,6 @@
 {
     "pack": {
-        "description": "${mod_name}",
+        "description": "${mod_display_name}",
         "pack_format": 8
     }
 }
