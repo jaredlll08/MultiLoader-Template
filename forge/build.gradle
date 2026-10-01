@@ -3,9 +3,6 @@ plugins {
     id 'net.minecraftforge.gradle' version '[6.0.24,6.2)'
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
 }
-base {
-    archivesName = "${mod_name}-forge-${minecraft_version}"
-}
 mixin {
     config("${mod_id}.mixins.json")
     config("${mod_id}.forge.mixins.json")
